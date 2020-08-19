@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <title>轮播图</title>
+    <script type="text/javascript" src="tools.js"></script>
+    <style type="text/css">
+        *{
+            margin: 0;
+            padding: 0;
+        }
+
+        img{
+            width: 600px;
+            height: 400px;
+        }
+        /**
+        设置outer样式
+         */
+        #outer{
+            width: 620px;
+            height: 400px;
+            margin: 200px auto;
+            background-color: #97DB9A;
+            padding: 10px 0;
+            /* 裁剪溢出的内容 */
+            overflow: hidden;
+            /*给子元素开启绝对定位的时候，最好给父元素开启相对定位*/
+            position: relative;
+        }
+        /*设置imgList*/
+        #imgList{
+            /*去除项目符号*/
+            list-style: none;
+            /*设置ul的宽度，这样可以让图片浮动，横过来
+            同时由于使用了外边距margin10，那么还要加上每个图片的20边距
+            加起来一共是3100px, 为了能够动态设置，使用JS实现*/
+            /* 这时ul相对于outer去定位 */
+            position: absolute;
+        }
+    /*    设置图片中的li*/
+        li{
+            /* 设置浮动 */
+            float: left;
+            /* 设置侧边距 */
+            margin: 0 10px;
+        }
+        /*设置导航按钮*/
+        #navDiv{
+            /*开启绝对定位*/
+            position: absolute;
+            /* 设置位置 */
+            bottom: 25px;
+        }
+        #navDiv a{
+            /*默认的内联元素的宽高不起作用，在设置浮动之后，内联元素也会变成块元素*/
+            float: left;
+            background-color: red;
+            width: 15px;
+            height: 15px;
+            margin: 0 5px;
+            /* opacity属性设置透明度为0.5 */
+            opacity: 0.5;
+            /* 兼容IE8的透明度设置 */
+            filter: alpha(opacity=50);
+        }
+        /*设置鼠标移入的效果*/
+        #navDiv a:hover{
+            background-color: black;
+        }
+
+    </style>
+    <script type="text/javascript">
+        window.onload = function () {
+            // 设置imgList宽度
+            let imgList = document.getElementById("imgList");
+            // 获取页面中所有的图片
+            let imgArr = document.getElementsByTagName("img");
+            imgList.style.width = 620*imgArr.length+"px";
+            /*
+            * 设置导航按钮居中
+            * */
+            let navDiv = document.getElementById("navDiv");
+            let outer = document.getElementById("outer");
+            /**
+             * 设置navDiv的left值
+             */
+            console.log(outer.clientWidth);
+            console.log(outer.offsetWidth);
+            navDiv.style.left = (outer.offsetWidth - navDiv.offsetWidth) / 2 + "px";
+
+            // 默认显示图片的索引
+            let index=0;
+            // 获取所有的a
+            let allA = document.getElementsByTagName("a");
+            // 默认的第一张图片显示黑色
+            allA[index].style.backgroundColor = "black";
+
+            /**
+             * 点击超链接，切换到指定的图片
+             */
+            for(let i=0;i<allA.length;i++){
+                // 每一个超链接都保存一个自己的索引
+                allA[i].num = i;
+                allA[i].onclick = function () {
+                    // 关闭自动切换的定时器
+                    clearInterval(timer);
+                    // 获取点击超链接的索引
+                    index = this.num;
+                    /**
+                     * 切换图片
+                     * 第一张 0 0
+                     * 第二张 1 -520
+                     * 第三张 2 -1050
+                     */
+                    //imgList.style.left = -620 * index + "px";
+                    setA();
+                    move(imgList, "left", -620 * index, 15, 20, function () {
+                        autoChange();
+                    });
+                };
+            }
+
+            // 定义一个自动切换的定时器
+            let timer;
+            // 自动切换图片
+            autoChange();
+
+            // 创建一个方法设置选中的a
+            function setA() {
+                if(index >= imgArr.length - 1){
+                    // 如果到了最后一张，直接设置index=0
+                    index = 0;
+                    // 此时显示的是最后一张图片
+                    // 通过CSS将最后一张直接切换成第一张
+                    imgList.style.left = "0";
+                }
+                for(let i=0;i<allA.length;i++){
+                    // 直接将内联样式的颜色去掉了，这时候样式表里面的颜色会生效，是红色
+                    // 如果直接设置成为红色，那么由于内联急别的优先级最高，导致鼠标hover时
+                    // 失去该样式，使用空串，内联样式失效，直接使用样式表中的样式
+                    allA[i].style.backgroundColor = "";
+                }
+                allA[index].style.backgroundColor = "black";
+            }
+
+            // 创建一个函数，用来开启自动切换图片
+            function autoChange() {
+                timer = setInterval(function () {
+                    index = (++index)%imgArr.length;
+                    move(imgList, "left", -620*index, 15, 20, function () {
+                        // 修改导航点
+                        setA();
+                    })
+                }, 3000)
+            }
+
+        }
+    </script>
+</head>
+<body>
+<!--创建一个外部的div，来作为大的容器-->
+<div id="outer">
+    <!--创建一个ul，用来放置图片-->
+    <ul id="imgList">
+        <li><img src="../images/DSC_0008.JPG"></li>
+        <li><img src="../images/DSC_0012.JPG"></li>
+        <li><img src="../images/DSC_0028.JPG"></li>
+        <li><img src="../images/DSC_0029.JPG"></li>
+        <li><img src="../images/DSC_0033.JPG"></li>
+        <li><img src="../images/DSC_0207.JPG"></li>
+        <li><img src="../images/DSC_0008.JPG"></li>
+    </ul>
+    <!--创建导航按钮-->
+    <dic id="navDiv">
+        <a href="javascripts:;"></a>
+        <a href="javascripts:;"></a>
+        <a href="javascripts:;"></a>
+        <a href="javascripts:;"></a>
+        <a href="javascripts:;"></a>
+        <a href="javascripts:;"></a>
+    </dic>
+</div>
+</body>
+</html>
