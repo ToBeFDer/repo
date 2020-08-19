@@ -3,8 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <script type="text/javascript">
+        /**
+         * History对象可以用来操作浏览器向前或者向后翻页
+         */
+        // alert(history.length)
+        window.onload = function () {
+            let btn = document.getElementById("btn");
+            btn.onclick = function () {
+                history.back();
+            }
+            let btn2 = document.getElementById("btn2");
+            btn2.onclick = function () {
+                history.forward()
+            }
+        }
+    </script>
 </head>
 <body>
-
+<h1>History</h1>
+<button id="btn">点我回退</button>
+<div><a href="before-page.html">前往测试页面</a></div>
+<button id="btn2">点我前进</button>
 </body>
 </html>
