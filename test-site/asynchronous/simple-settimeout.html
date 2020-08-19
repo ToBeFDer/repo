@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="ZH">
+<head>
+    <meta charset="UTF-8">
+    <title>Person greeter app</title>
+</head>
+<body>
+<p class = "clock"></p>
+<script>
+    // let myGreeting = setTimeout(()=>{
+    //     alert("Hello, Mr.Huang")
+    // }, 2000);
+    function disPlayTime(){
+        let date= new Date();
+        let time = date.getTime().toString();
+        document.querySelector(".clock").textContent=time;
+    }
+    disPlayTime();
+    const createClock = setInterval(disPlayTime, 1000); //返回一个确定的值，可以使用这个值取消间隔任务
+</script>
+</body>
+</html>

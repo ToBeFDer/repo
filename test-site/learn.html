@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>二次元俱乐部</title>
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300|Sonsie+One" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=ZCOOL+KuaiLe" rel="stylesheet">
+    <link href="style.css" rel="stylesheet">
+</head>
+
+<body>
+
+<!--<header> &lt;!&ndash; 本站所有网页的统一主标题 &ndash;&gt;-->
+<!--    <h1>聆听电子天籁之音</h1>-->
+<!--</header>-->
+
+<!--<nav> &lt;!&ndash; 本站统一的导航栏 &ndash;&gt;-->
+<!--    <ul>-->
+<!--        <li><a href="#">主页</a></li>-->
+<!--        &lt;!&ndash; 共n个导航栏项目，省略…… &ndash;&gt;-->
+<!--    </ul>-->
+
+<!--    <form> &lt;!&ndash; 搜索栏是站点内导航的一个非线性的方式。 &ndash;&gt;-->
+<!--        <input type="search" name="q" placeholder="要搜索的内容">-->
+<!--        <input type="submit" value="搜索">-->
+<!--    </form>-->
+<!--</nav>-->
+
+<!--<main> &lt;!&ndash; 网页主体内容 &ndash;&gt;-->
+<!--    <article>-->
+<!--        &lt;!&ndash; 此处包含一个 article（一篇文章），内容略…… &ndash;&gt;-->
+<!--    </article>-->
+
+<!--    <aside> &lt;!&ndash; 侧边栏在主内容右侧 &ndash;&gt;-->
+<!--        <h2>相关链接</h2>-->
+<!--        <ul>-->
+<!--            <li><a href="#">这是一个超链接</a></li>-->
+<!--            &lt;!&ndash; 侧边栏有n个超链接，略略略…… &ndash;&gt;-->
+<!--        </ul>-->
+<!--    </aside>-->
+<!--</main>-->
+
+<!--<img src="images/DSC_0207.JPG"-->
+<!--alt="落日的剪影"-->
+<!--width="60%"-->
+<!--height="60%"-->
+<!--title="傍晚落日的剪影">-->
+
+<!--<svg version="1.1"-->
+<!--     baseProfile="full"-->
+<!--     width="300" height="200"-->
+<!--     xmlns="http://www.w3.org/2000/svg">-->
+<!--    <rect width="100%" height="100%" fill="black" />-->
+<!--    <circle cx="150" cy="100" r="90" fill="blue" />-->
+<!--</svg>-->
+
+<!--<svg width="300" height="200">-->
+<!--    <rect width="50%" height="100%" fill="#DADADA" />-->
+<!--</svg>-->
+    <html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta name="keywords" content="百度地图,百度地图API，百度地图自定义工具，百度地图所见即所得工具" />
+        <meta name="description" content="百度地图API自定义地图，帮助用户在可视化操作下生成百度地图" />
+        <title>百度地图API自定义地图</title>
+        <!--引用百度地图API-->
+        <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=NL7D8iMBjp6QuQLnf1iupodaO8wzU5Xn"></script>
+    </head>
+
+    <body>
+    <!--百度地图容器-->
+    <div style="width:700px;height:550px;border:#ccc solid 1px;font-size:12px" id="map"></div>
+    <p style="color:red;font-weight:600">地图生成工具基于百度地图JS api v2.0版本开发，使用请申请密匙。
+        <a href="http://developer.baidu.com/map/index.php?title=jspopular/guide/introduction" style="color:#2f83c7" target="_blank">了解如何申请密匙</a>
+        <a href="http://lbsyun.baidu.com/apiconsole/key?application=key" style="color:#2f83c7" target="_blank">申请密匙</a>
+    </p>
+    </body>
+    <script type="text/javascript">
+        //创建和初始化地图函数：
+        function initMap(){
+            createMap();//创建地图
+            setMapEvent();//设置地图事件
+            addMapControl();//向地图添加控件
+            addMapOverlay();//向地图添加覆盖物
+        }
+        function createMap(){
+            map = new BMap.Map("map");
+            map.centerAndZoom(new BMap.Point(113.791411,31.051506),15);
+        }
+        function setMapEvent(){
+            map.enableScrollWheelZoom();
+            map.enableKeyboard();
+            map.enableDragging();
+            map.enableDoubleClickZoom()
+        }
+        function addClickHandler(target,window){
+            target.addEventListener("click",function(){
+                target.openInfoWindow(window);
+            });
+        }
+        function addMapOverlay(){
+        }
+        //向地图添加控件
+        function addMapControl(){
+            var scaleControl = new BMap.ScaleControl({anchor:BMAP_ANCHOR_BOTTOM_LEFT});
+            scaleControl.setUnit(BMAP_UNIT_IMPERIAL);
+            map.addControl(scaleControl);
+            var navControl = new BMap.NavigationControl({anchor:BMAP_ANCHOR_TOP_LEFT,type:BMAP_NAVIGATION_CONTROL_LARGE});
+            map.addControl(navControl);
+            var overviewControl = new BMap.OverviewMapControl({anchor:BMAP_ANCHOR_BOTTOM_RIGHT,isOpen:true});
+            map.addControl(overviewControl);
+        }
+        var map;
+        initMap();
+    </script>
+    </html>
+<footer> <!-- 本站所有网页的统一页脚 -->
+    <p>© 2050 某某保留所有权利</p>
+</footer>
+</body>
+</html>

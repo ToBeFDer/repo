@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script>
+        window.onload = function () {
+            const btn1= document.getElementById("btn1");
+            const allA = document.getElementsByTagName("a");
+            // 只能为已有的超链接添加事件，不能给新加的添加事件
+            // for(let i=0;i<allA.length;i++){
+            //     allA[i].onclick = function () {
+            //         alert("我是a的单击响应函数");
+            //     }
+            // }
+            // 这样的添加导致后面加入的超链接并不具有alert功能，因为没有添加单击响应函数
+            const ul = document.getElementById("u1");
+            btn1.onclick = function () {
+                let li = document.createElement("li");
+                li.innerHTML = "<a href='javascript:;' class='link'>新建的</a>";
+
+                ul.appendChild(li);
+            }
+            /**
+             * 我们希望只绑定一次时间，即可应用到多个元素上，即使元素是后面添加的
+             * 我们可以尝试将其绑定给这些元素绑定给元素共同的祖先元素
+             */
+            // 为ul绑定一个单击响应函数
+            // 这就叫做事件的委派 - 将事件统一绑定给元素的祖先元素
+            // 这样当后代元素上的事件触发时，会一直冒泡到祖先元素
+            ul.onclick = function (event) {
+                event = event||window.event;
+
+                /**
+                 * target
+                 * - event中的target表示的触发事件的对象
+                 */
+                // 如果触发事件的对象时我们期望的元素，则将其执行，否则不执行
+                if(event.target.className=="link") {
+                    alert("Hi~~~");
+                }
+            }
+        }
+    </script>
+</head>
+<body>
+<button id="btn1">添加超链接</button>
+<ul id="u1">
+    <li><a href="javascript:;" class="link">超链接一</a> </li>
+    <li><a href="javascript:;" class="link">超链接二</a> </li>
+    <li><a href="javascript:;" class="link">超链接三</a> </li>
+</ul>
+</body>
+</html>

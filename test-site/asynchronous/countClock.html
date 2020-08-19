@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <title>秒表</title>
+</head>
+<body>
+<p></p>
+<button class="start">开始</button>
+<button class="stop">停止</button>
+<button class="reset">重置</button>
+<SCRIPT>
+    // 这里的思想就是：设置一个1s的interval，每次调用一下函数
+    // 函数里面进行一个计数，使用该计数作为显示的消息
+    const Start = document.querySelector(".start");
+    const Para = document.querySelector("p");
+    const Reset = document.querySelector(".reset");
+    const Stop = document.querySelector(".stop");
+    let secondCount = 0;
+    let stopWatch;
+
+    function display(){
+        let hours = Math.floor(secondCount / 3600);
+        let minutes = Math.floor((secondCount % 3600) / 60);
+        let seconds = Math.floor(secondCount % 60);
+
+        let displayHours = (hours<10)? "0" + hours : hours;
+        let displayMinutes = (minutes<10)? "0" + minutes : minutes;
+        let displaySeconds = (seconds<10)? "0" + seconds : seconds;
+
+        Para.textContent = displayHours + ":" + displayMinutes + ":" + displaySeconds;
+        secondCount++;
+    }
+
+    Start.addEventListener("click",()=>{
+       stopWatch = setInterval(display, 1000);
+       // 按了开始之后不能再按第二次
+       Start.disabled = true;
+    });
+
+    Stop.addEventListener("click", ()=>{
+        clearInterval(stopWatch);
+        Start.disabled = false;
+    });
+
+    Reset.addEventListener("click", ()=>{
+        clearInterval(stopWatch);
+        Start.disabled = false;
+        secondCount = 0;
+        display();
+    });
+    display();
+</SCRIPT>
+</body>
+</html>

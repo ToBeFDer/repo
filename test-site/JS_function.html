@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Function scope example</title>
+</head>
+<body>
+<button>Change Color</button>
+<script>
+    const btn = document.querySelector("button");
+
+    function random(number){
+        return Math.floor(Math.random()*(number+1))
+    }
+    function bgChange(e) {
+        const rndCol = 'rgb(' + random(255) + ',' + random(255) + ',' + random(255) + ')';
+        e.target.style.backgroundColor = rndCol;
+        console.log(e);
+    }
+    btn.addEventListener("click",bgChange);
+</script>
+<div>
+    <form>
+        <div>
+            <label for="lName">姓：</label>
+            <input id="lName" name="lName" type="text">
+        </div>
+        <div>
+            <label for="fName">名：</label>
+            <input id="fName" name="fName" type="text">
+        </div>
+        <div>
+            <input id="submit" type="submit">
+        </div>
+    </form>
+    <p></p>
+</div>
+<script>
+    const form = document.querySelector("form");
+    const fName = document.getElementById("fName");
+    const lName = document.getElementById("lName");
+    const submit = document.getElementById("submit");
+    const para = document.querySelector("p");
+
+    form.onsubmit = function (e) {
+        if(fName.value === "" || lName.value === ""){
+            e.preventDefault();
+            para.textContent = "姓名都不能为空！"
+        }
+    }
+</script>
+</body>
+</html>

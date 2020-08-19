@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="styles/form-fieldset.css">
+    <title>Title</title>
+</head>
+<body>
+<form>
+    <fieldset class="toplevel">
+        <legend>This is just a test</legend>
+    <fieldset>
+        <legend>Fruit juice size</legend>
+        <p>
+            <input type="radio" name="size" id="size_1" value="small">
+            <label for="size_1">Small</label>
+        </p>
+        <p>
+            <input type="radio" name="size" id="size_2" value="medium">
+            <label for="size_2">Medium</label>
+        </p>
+        <p>
+            <input type="radio" name="size" id="size_3" value="large">
+            <label for="size_3">Large</label>
+        </p>
+    </fieldset>
+    <fieldset>
+        <legend>I can speak</legend>
+        <p>
+            <input type="radio" name="language" id="Chinese" value="Chinese">
+            <label for="Chinese">Chinese</label>
+        </p>
+        <p>
+            <input type="radio" name="language" id="English" value="English">
+            <label for="English">English</label>
+        </p>
+        <p>
+            <input type="radio" name="language" id="Japanese" value="japanese">
+            <label for="Japanese">Japanese</label>
+        </p>
+    </fieldset>
+    </fieldset>
+    <form>
+        <p>
+            <label for="taste_1">I like cherry</label>
+            <input type="checkbox" id="taste_1" name="taste_cherry" value="1"><!--相当于选择之后就获得值1-->
+        </p>
+        <p>
+            <label for="taste_2">I like banana</label>
+            <input type="checkbox" id="taste_2" name="taste_banana" value="2">
+        </p>
+    </form>
+
+    <div>
+        <label for="username">Name: <abbr title="required">*</abbr></label>
+        <input id="username" type="text" name="username">
+    </div>
+
+    <div>
+        <label for="username">Name:</label>
+        <input type="text" name="username">
+        <label for="username"><abbr title="required">*</abbr></label>
+    </div>
+    <div>
+        <label for="usernam">
+            <span>Name:</span>
+            <input id="usernam" type="text" name="username">
+            <abbr title="required">*</abbr>
+        </label>
+    </div>
+</form>
+
+<form>
+    <p>
+        <label for="pwd">password:</label>
+        <input type="password" id="pwd" name="pwd">
+    </p>
+</form>
+
+<form>
+    <p>
+        <label for="multext">多行文本：</label>
+        <textarea id="multext" cols="30" rows="3"></textarea>
+    </p>
+</form>
+
+<form>
+    <p>
+        <label for="groups">Choose a kind of food:</label>
+        <select id="groups" name="groups">
+            <optgroup label="fruits">
+                <option>Banana</option>
+                <option selected>Cherry</option>
+                <option>Lemon</option>
+            </optgroup>
+            <optgroup label="vegetables">
+                <option>Carrot</option>
+                <option>Eggplant</option>
+                <option>Potato</option>
+            </optgroup>
+        </select>
+        <button type="submit">提交</button>
+    </p>
+</form>
+
+<p>
+    <label for="myFruit">What's your favorite fruit?</label>
+    <input type="text" name="myFruit" id="myFruit" list="mySuggestion">
+    <datalist id="mySuggestion">
+        <option>Apple</option>
+        <option>Banana</option>
+        <option>Blackberry</option>
+        <option>Blueberry</option>
+        <option>Lemon</option>
+        <option>Lychee</option>
+        <option>Peach</option>
+        <option>Pear</option>
+    </datalist>
+</p>
+
+<fieldset>
+    <legend>What is your favorite meal?</legend>
+    <ul>
+        <li>
+            <label for="soup">Soup</label>
+            <input type="radio" checked id="soup" name="meal" value="soup">
+        </li>
+        <li>
+            <label for="curry">Curry</label>
+            <input type="radio" id="curry" name="meal" value="curry">
+        </li>
+        <li>
+            <label for="pizza">Pizza</label>
+            <input type="radio" id="pizza" name="meal" value="pizza">
+        </li>
+    </ul>
+</fieldset>
+<button type="submit">
+    This a <br><strong>submit button</strong>
+</button>
+
+<input type="submit" value="This is a submit button">
+<input type="number" name="age" id="age" min="1" max="10" step="2">
+<label for="beans">How many beans can you eat?</label>
+<input type="range" name="beans" id="beans" min="0" max="500" step="10">
+<span class="beancount"></span>
+
+<label for="myDate">When are you available this summer?</label>
+<input type="date" name="myDate" min="2013-06-01" max="2013-08-31" id="myDate">
+<input type="color" name="color" id="color">
+<p>
+    <meter min="0" max="100" value="75" low="33" high="66" optimum="50">75</meter>
+</p>
+<p>
+<form action="http://foo.com" method="post">
+    <div>
+        <label for="say">What greeting do you want to say?</label>
+        <input type="text" name="sayvar" id="say">
+
+    </div>
+    <div>
+        <label for="to">Who do you want to say it to?</label>
+        <input type="text" name="tovar" id="to" required>
+
+    </div>
+    <div>
+        <button>Send my greetings</button>
+    </div>
+</form>
+</p>
+<form method="post" enctype="multipart/form-data">
+    <div>
+        <label for="file">Choose a file</label>
+        <input type="file" id="file" name="myFile">
+    </div>
+    <div>
+        <button>Send the file</button>
+    </div>
+</form>
+</body>
+</html>

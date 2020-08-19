@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <title>div的鼠标跟随</title>
+    <style type="text/css">
+        #box1{
+            width: 100px;
+            height: 100px;
+            background-color: #97DB9A;
+            /*
+            要想设置定位，必须要开启box1的绝对定位
+             */
+            position: absolute;
+        }
+    </style>
+    <script type="text/javascript">
+        window.onload = function () {
+            /**
+             * 使div可以跟随鼠标移动
+             */
+            const box1 = document.getElementById("box1");
+            document.onmousemove = function (e) {
+                e = e||window.event;
+
+                // clientX总是相对于屏幕的距离，一旦包含滚动条，
+                // 相对的距离就会减小，就会相对跑到屏幕上面的部分去
+                // 因此这里还需要加上一个滚动的距离
+
+                // 使用pageX就是相对于页面本身的距离而不是滚动条的距离
+                // ie8不支持pageX
+                // let left = e.pageX;
+                // let top = e.pageY;
+
+                let left = e.clientX;
+                let top = e.clientY;
+
+                // 获取滚动条滚动的距离
+                let st = document.documentElement.scrollTop;
+                let sh = document.documentElement.scrollLeft;
+                box1.style.left = left + sh + "px";
+                box1.style.top = top + st + "px";
+                // 获取
+
+                console.log(st);
+            }
+        }
+    </script>
+</head>
+<body style="height: 2000px">
+
+<div id="box1"></div>
+</body>
+</html>

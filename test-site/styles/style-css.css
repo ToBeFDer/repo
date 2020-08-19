@@ -1,0 +1,19 @@
+h1 + p {
+    color: red;
+}
+
+a:link {
+    color: pink;
+}
+
+a:visited {
+    color: green;
+}
+
+a:hover {
+    text-decoration: none;
+}
+
+li em {
+    color: green;
+}

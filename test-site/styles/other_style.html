@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="ZH">
+<head>
+    <meta charset="UTF-8">
+    <style type="text/css">
+        #box1{
+            width: 100px;
+            height: 100px;
+            padding: 30px;
+            margin: 10px;
+            border: solid 5px red;
+            background-color: #97DB9A;
+        }
+    </style>
+    <script type="text/javascript">
+        window.onload = function () {
+            const box1 = document.getElementById("box1");
+            const btn01 = document.getElementById("btn01");
+
+            btn01.onclick = function () {
+                /**
+                 * clientWidth
+                 * clientHeight
+                 * 获取可见宽度和可见高度,没有单位
+                 * 会获取元素的宽度和高度，包括padding的宽度
+                 * 只读属性，不可修改，只能使用style
+                 */
+                //alert(box1.clientHeight)
+
+            }
+        }
+    </script>
+    <title>Title</title>
+</head>
+<body>
+<button id="btn01">点我一下</button>
+<br />
+<br />
+<div id="box1"></div>
+</body>
+</html>

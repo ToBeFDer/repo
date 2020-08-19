@@ -1,0 +1,38 @@
+/*p{*/
+/*    color: red;*/
+/*    width: 330px;*/
+/*    border: 1px solid black;*/
+/*}*/
+
+html {
+    font-size: 10px;
+    font-family: "Open sans",sans-serif;
+    background-color: #00539F;
+}
+
+h2{
+    font-size: 60px;
+    text-align: center;
+    margin: 2px;
+    padding: 10px 0;
+    color: orangered;
+    text-shadow: 3px 3px 3px black;
+}
+
+body {
+    width: 700px;
+    margin: 0 auto;
+    background-color: #FF9500;
+    padding: 0 20px 30px 30px;
+    border: 5px solid black;
+}
+
+p,li{
+    font-size: 16px;
+    line-height: 2;
+    letter-spacing: 1px;
+}
+img {
+    display: block;
+    margin: 0 auto;
+}

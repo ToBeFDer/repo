@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style type="text/css">
+        #box1 {
+            width: 200px;
+            height: 100px;
+            background-color: yellowgreen;
+        }
+    </style>
+
+    <script type="text/javascript">
+        window.onload = function () {
+            let box1 = document.getElementById("box1");
+            let btn01 = document.getElementById("btn01");
+            btn01.onclick = function () {
+                // 使用style只能读取内联样式
+                // alert(box1.style.width);
+
+                /*
+                获取元素当前的样式
+                语法：元素.currentStyle.样式名
+                读取当前正在显示的样式，谁生效就获取谁
+                 */
+                // alert(box1.currentStyle.width);// chrome不支持该参数，只有IE支持
+                /*
+                在其他浏览器中使用getComputeStyle()方法获取当前元素的样式
+                这个方法是window方法，可以直接使用
+                需要两个参数：
+                    第一个：要获取样式的元素
+                    第二个：可以传递一个伪元素，一般传递null
+                返回一个对象，对象中封装了当前元素对应的样式
+                如果没有设置样式，则会获取到真实的值而不是默认值
+                比如没有设置width，它不会获取到width，而是一个长度
+                 */
+
+                // let obj = getComputedStyle(box1, null);
+                // console.log("kkkkk");
+                // alert(obj.width);
+
+                /*
+                * 定义一个函数，用来获取指定元素的当前样式
+                * 参数：
+                *       obj - 需要获取的样式的元素
+                *       name - 要获取的样式名
+                *
+                * 通过currentStyle和getComputedStyle获取的属性都是只读的，不可修改
+                * */
+
+                // 兼容性问题的处理
+                function getStyle(obj,name) {
+                    // 如果不加window，那么表示是一个变量，加了就是一个属性
+                    // 变量没有找到会报错，但是属性没找到只会返回undefined
+                    if(window.getComputedStyle) {
+                        // 正常浏览器的方式
+                        return getComputedStyle(obj, null)[name];
+                    }else {
+                        //IE8的方式
+                        return obj.currenStyle.name;
+                    }
+                }
+                let w = getStyle(box1, "width");
+                alert(w)
+            }
+        }
+    </script>
+</head>
+<body>
+<button id="btn01">点我一下</button>
+<br />
+<br />
+<div id="box1"></div>
+</body>
+</html>

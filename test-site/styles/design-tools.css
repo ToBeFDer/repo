@@ -1,0 +1,98 @@
+.select {
+    /* 出于可访问性方面的原因，所有尺寸都会由em值表示
+       (用来确保用户在文本模式下使用浏览器缩放时组件的可缩放性).
+       在大多数浏览器下的默认换算是1em == 16px.
+       如果你对em和px的转换感到疑惑, 请参考http://riddle.pl/emcalc/ */
+    font-size   : 0.625em; /* 这个（=10px）是以em方式表达的这个环境里的字体大小 */
+    font-family : Verdana, Arial, sans-serif;
+
+    -moz-box-sizing : border-box;
+    box-sizing : border-box;
+
+    /* 我们需要为将要添加的向下箭头准备一些额外的空间 */
+    padding : .1em 2.5em .2em .5em; /* 1px 25px 2px 5px */
+    width   : 10em; /* 100px */
+
+    border        : .2em solid #000; /* 2px */
+    border-radius : .4em; /* 4px */
+    box-shadow    : 0 .1em .2em rgba(0,0,0,.45); /* 0 1px 2px */
+
+    /* 第一段声明是为了不支持线性梯度填充的浏览器准备的。
+       第二段声明是因为基于WebKit的浏览器没有预先定义它。
+       如果你想为过时的浏览器提供支持, 请参阅 http://www.colorzilla.com/gradient-editor/ */
+    background : #F0F0F0;
+    background : -webkit-linear-gradient(90deg, #E3E3E3, #fcfcfc 50%, #f0f0f0);
+    background : linear-gradient(0deg, #E3E3E3, #fcfcfc 50%, #f0f0f0);
+}
+
+.select .value {
+    /* 因为值的宽度可能超过组件的宽度，我们需要确保他不会改变组件的宽度 */
+    display  : inline-block;
+    width    : 100%;
+    overflow : hidden;
+
+    vertical-align: top;
+
+    /* 如果内容溢出了, 最好有一个恰当的缩写. */
+    white-space  : nowrap;
+    text-overflow: ellipsis;
+}
+
+.select:after {
+    content : "▼"; /* 我们使用了unicode 编码的字符 U+25BC; 参阅 http://www.utf8-chartable.de */
+    position: absolute;
+    z-index : 1; /* 这对于防止箭头覆盖选项列表很重要 */
+    top     : 0;
+    right   : 0;
+
+    -moz-box-sizing : border-box;
+    box-sizing : border-box;
+
+    height  : 100%;
+    width   : 2em;  /* 20px */
+    padding-top : .1em; /* 1px */
+
+    border-left  : .2em solid #000; /* 2px */
+    border-radius: 0 .1em .1em 0;  /* 0 1px 1px 0 */
+
+    background-color : #000;
+    color : #FFF;
+    text-align : center;
+}
+
+.select .optList {
+    z-index : 2; /* 我们明确的表示选项列表会始终与向下箭头重叠 */
+
+    /* 这会重置ul元素的默认样式 */
+    list-style: none;
+    margin : 0;
+    padding: 0;
+
+    -moz-box-sizing : border-box;
+    box-sizing : border-box;
+
+    /* 这会确保即使数值比组件小，选项列表仍能变得跟组件自身一样大*/
+    min-width : 100%;
+
+    /* 万一列表太长了, 它的内容会从垂直方向溢出(会自动添加一个竖向滚动条)
+       但是水平方向不会(因为我们没有设定宽度, 列表会自适应宽度. 如果不能的话，内容会被截断) */
+    max-height: 10em; /* 100px */
+    overflow-y: auto;
+    overflow-x: hidden;
+
+    border: .2em solid #000; /* 2px */
+    border-top-width : .1em; /* 1px */
+    border-radius: 0 0 .4em .4em; /* 0 0 4px 4px */
+
+    box-shadow: 0 .2em .4em rgba(0,0,0,.4); /* 0 2px 4px */
+    background: #f0f0f0;
+}
+
+.select .option {
+    padding: .2em .3em; /* 2px 3px */
+}
+
+.select .highlight {
+    background: #000;
+    color: #FFFFFF;
+}

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="ZH">
+<head>
+    <meta charset="UTF-8">
+    <style type="text/css">
+        *{
+            margin: 0;
+            padding: 0;
+        }
+
+        #outer{
+            width: 800px;
+            margin: 80px auto;
+            text-align: center;
+        }
+        button{
+            background-color: #97DB9A;
+            border-color: black;
+        }
+    </style>
+    <script>
+        window.onload = ()=>{
+            const prevbtn = document.getElementById("prev");
+            const nextbtn = document.getElementById("next");
+            const Img = document.getElementsByTagName("img")[0];
+            const Text = document.getElementsByClassName("count")[0];
+            let listPic = ["images/DSC_0008.JPG","images/DSC_0012.JPG","images/DSC_0028.JPG","images/DSC_0029.JPG","images/DSC_0033.JPG"];
+            let i=0;
+            prevbtn.onclick = function () {
+                i--;
+                if(i<0)
+                    i = listPic.length-1;
+                Text.innerText = "当前位于第"+(i+1)+"页";
+                Img.src=listPic[i];
+            }
+            nextbtn.onclick = function () {
+                i = (++i)%listPic.length;
+                Text.innerText = "当前位于第"+(i+1)+"页";
+                Img.src=listPic[i];
+            }
+        }
+    </script>
+    <title>照片切换</title>
+</head>
+<body>
+<div id="outer">
+    <div class="count">当前位于第1页</div>
+    <img src="images/DSC_0008.JPG" alt="国庆" style="width: 100%">
+    <button id="prev">上一张</button>
+    <button id="next">下一张</button>
+</div>
+</body>
+</html>
