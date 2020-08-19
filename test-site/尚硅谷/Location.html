@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Location</title>
+    <script type="text/javascript">
+        window.onload = function () {
+            let btn = document.getElementsByTagName("button")[0];
+            btn.onclick = function () {
+                // 如果直接打印location，可以获取当前页面的路径
+                /**
+                 * 如果直接将location修改为一个完整的或者相对路径
+                 * 页面会直接跳转，并生成一个历史记录
+                 */
+                location = "../letter.html"; // 可以使用相对路径直接修改当前页面的位置
+
+                /**
+                 * assign()
+                 *      - 用来跳转到其他页面，作用和直接修改location一样
+                 * reload()
+                 *      - 如果重新加载当前页面，作用和刷新按钮一样
+                 *      - 如果在方法中传递一个true，作为参数，则会强制清空缓存刷新页面
+                 * replace()
+                 *      - 可以使用一个新的页面替换当前页面，调用完毕也会跳转页面
+                 *      - 不会生成历史记录，不能使用回退按钮回退
+                 */
+
+            }
+        }
+    </script>
+</head>
+<body>
+<button>点我一下</button>
+</body>
+</html>
