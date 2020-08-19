@@ -75,5 +75,4 @@ function move(obj, attr, target, speed, step, callback) {
             callback && callback();
         }
     }, step)
-
 }
