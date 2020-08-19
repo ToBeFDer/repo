@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>定时器</title>
+    <script type="text/javascript">
+        window.onload = function () {
+            let btn = document.getElementById("count");
+            /**
+             * setInterval()
+             *  - 定时调用
+             *  - 可以将一个函数每隔一段时间执行一次
+             *  - 参数
+             *      1. 回调函数
+             *      2. 每次调用间隔的时间，单位是毫秒
+             */
+            // 每次点击都会重新开启一个定时器
+            btn.onclick = function(){
+                let para = document.getElementsByTagName("p")[0];
+                let num = 1;
+                para.innerText=0;
+                // 开启一个定时器之前要关闭当前元素上的其他定时器关闭
+                let timer = setInterval(function () {
+                    para.innerText=num++;
+                    if(num === 101)
+                        clearInterval(timer);
+                }, 100);
+                console.log(timer)
+                /**
+                 * clearInterval(timer);
+                 * 可以接受任意参数，若是有效的定时器标识，则停止对应的定时器
+                 * 如果不是一个有效的标识，则什么也不做
+                 */
+
+            }
+        }
+    </script>
+</head>
+<body>
+<button id="count">计次</button>
+<p></p>
+</body>
+</html>
