@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <script type="text/javascript" src="../lib/vue.js"></script>
+    <title>事件修饰符</title>
+    <style>
+        .inner{
+            height: 150px;
+            background-color: darkcyan;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+    <div class="inner" @click="divHandler">
+        // 在事件后面使用.stop终止事件的冒泡
+        <input type="button" value="戳他" @click.stop="btnHandler">
+    </div>
+    </div>
+
+    <script>
+        let vm = new Vue({
+            el:"#app",
+            data:{},
+            methods:{
+                divHandler(){
+                    console.log("这时触发了inner的事件")
+                },
+                btnHandler(){
+                    console.log("这时触发了btn的事件")
+                }
+            }
+        })
+    </script>
+</body>
+</html>

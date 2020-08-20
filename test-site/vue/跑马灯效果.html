@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <script src="../lib/vue.js" type="text/javascript"></script>
+    <title>跑马灯</title>
+</head>
+<body>
+<div id="app">
+    <input type="button" value="浪起来" @click = "lang">
+    <input type="button" value="低调" @click = "stop">
+    <h4>{{ msg }}</h4>
+</div>
+
+
+<script>
+    let vm = new Vue({
+        el:"#app",
+        data:{
+            msg:"猥琐发育，别浪~~~",
+            intervalId:null // 在data上定义定时器Id
+        },
+        methods:{
+            lang(){
+                // 在vm实例中如果想要调用data上面的数据或者想要调用methods中的方法，
+                // 必须通过this.属性名或者实例名进行操作
+                //console.log(this.msg);
+                // 因为在setInterval函数中this就不再指向vm了，这里保存一份this的数据
+                /**let _this = this;
+                setInterval(function () {
+                    let start = _this.msg.substring(0,1);
+                    let end = _this.msg.substring(1);
+                    _this.msg = end + start;
+                }, 400);
+                 */
+                if(this.intervalId!=null) return;
+                this.intervalId = setInterval(() => {
+                    let start = this.msg.substring(0,1);
+                    let end = this.msg.substring(1);
+                    this.msg = end + start;
+                }, 400);
+                // 在es6中可以使用()=>{}类型的函数，这样可以保证内部的this就是指向外部的this
+
+
+                // 注意vm实例会监听自己身上data中所有数据的改变
+                // 只要数据发生一点变化，就会自动把最新的数据从data上同步到页面中
+                // 程序员只需要关心数据，不需要关心页面的重新渲染
+            },
+            stop(){
+                clearInterval(this.intervalId);
+                // 停止之后必须要重新将定时器id设置为null，否则停止之后无法重新开启
+                this.intervalId=null;
+            }
+        }
+    })
+
+    // 分析
+    // 给【浪起来】按钮绑定一个单击响应事件 v-on @
+    // 在按钮的事件处理函数中，写相关的业务逻辑代码；拿到msg字符串，然后调用字符串的
+    // substring进行字符串的截取操作，将第一个字符截取出来放到最后一个即可
+    // 为了实现点击按钮自动截取功能，需要将二中的功能放到定时器中
+</script>
+</body>
+</html>

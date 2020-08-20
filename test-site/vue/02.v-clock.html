@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <title>v-clock</title>
+    <script type="text/javascript" src="../lib/vue.js"></script>
+</head>
+<style>
+    [v-cloak]{
+        display: none;
+    }
+</style>
+<body>
+<div id="app">
+    <!--使用v-cloak能够解决插值表达式闪烁的问题-->
+    <p v-cloak>{{msg}}</p>
+<!--  默认v-text没有闪烁问题的  -->
+<!--  v-text会覆盖原来元素中原本的内容，但是插值表达式只会替换自己的占位符，不会把整个元素内容清空  -->
+<!--  注意v-band指令可以被简写为 :要绑定的属性，可以写合法的JS表达式  -->
+    <p v-text="msg"></p>
+    <p v-html="msg2"></p>
+    <!-- v-bind是vue中提供的用于绑定属性的指令，这样知道mytitle是一个变量 -->
+    <input type="button" value="按钮" v-bind:title="mytitle + '123'" @click="show">
+</div>
+
+<script>
+    let vm = new Vue({
+        el:"#app",
+        data:{
+            msg:'123',
+            msg2:'<h1>这是一个h1</h1>',
+            mytitle:"这是一个自己定义的title1"
+        },
+        methods:{
+            show:()=>{
+                alert("你点击按钮了！！！！！！")
+            }
+        }
+    })
+</script>
+</body>
+</html>
