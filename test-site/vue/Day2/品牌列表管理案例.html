@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <script type="text/javascript" src="../../lib/vue.js"></script>
+    <title>品牌列表管理案例</title>
+    <link href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+</head>
+<body>
+<div id="app">
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            <h3 class="panel-title">添加品牌</h3>
+        </div>
+        <div class="panel-body form-inline">
+            <label>
+                Id:
+                <input type="text" class="form-control" v-model="id">
+            </label>
+            <label>
+                Name:
+                <input type="text" class="form-control" v-model="name">
+            </label>
+<!--            在vue中，使用事件绑定机制，为元素指定处理函数的时候，加了小括号就可以给函数传递参数了-->
+            <input type="button" value="添加" class="btn btn-primary" @click="add()" >
+            <label>
+                搜索名称关键字:
+                <input type="text" class="form-control" v-model="keywords">
+            </label>
+        </div>
+    </div>
+    <table class="table table-bordered table-hover table-striped">
+        <thead>
+        <tr>
+            <th>Id</th>
+            <TH>Name</TH>
+            <th>Ctime</th>
+            <th>Operation</th>
+        </tr>
+        </thead>
+        <tbody>
+<!--        之前v-for中的数据是直接从list中渲染出来的，
+现在自定义了一个search方法，查找符合条件的数据，最后返回一个新数组-->
+        <tr v-for="item in search(keywords)" :key="item.id">
+            <td>{{item.id}}</td>
+            <td>{{item.name}}</td>
+<!--            调用了一个过滤器-->
+            <td>{{item.ctime | dateFormat}}</td>
+            <td>
+                <a href="" @click.prevent="del(item.id)">删除</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<script>
+    // 定义了一个全局过滤器
+    Vue.filter('dateFormat',function (dateStr, pattern="") {
+        // 根据给定的时间字符串得到特定的时间
+        let dt = new Date(dateStr);
+        let y = dt.getFullYear();
+        let m = dt.getMonth();
+        let d = dt.getDate();
+        // 使用tab键上面的`键，可以设置模板字符串,运用占位符
+        // 可能没有给出这个参数，那么就是undefined，这时候先给出一个判断，看能不能转为true
+        if(pattern && pattern.toLowerCase()=== 'yyyy-mm-dd'){
+            return `${y}-${m}-${d}`;
+        }else{
+            let hh = dt.getHours();
+            let mm = dt.getMinutes();
+            let ss = dt.getSeconds();
+            return `${y}-${m}-${d} ${hh}:${mm}:${ss}`
+        }
+    });
+
+    let vm = new Vue({
+        el:"#app",
+        data:{
+            id:'',
+            name:'',
+            list:[
+                {id:1, name:"奔驰", ctime:new Date()},
+                {id:2, name:"宝马", ctime:new Date()}
+            ],
+            keywords:''
+        },
+        methods:{
+            add(){// 添加的方法
+                let car = {id:this.id, name:this.name, ctime:new Date()};
+                if(!this.id||!this.name) return;
+                // 只需要向数组中添加新加入的数据就行了，vue会负责监听新数据的加入，并将其添加到页面
+                this.list.push(car);
+                this.id = this.name = ''
+            },
+            del(id){
+                // 根据传递过来的id，找到对应的索引
+                // 找到了索引直接调用splice方法
+                // this.list.some((item,i)=>{
+                //     if(item.id === id){
+                //         // 从索引为i的开始删除，删除一个
+                //         this.list.splice(i,1);
+                //         // 找到了之后，在数组的some方法中，如果return true
+                //         // 就会立即中止这个数组的后续循环
+                //         return true;
+                //     }
+                // })
+                let index = this.list.findIndex(item=>{
+                    if(item.id===id)
+                        return true;
+                });
+                this.list.splice(index,1);
+            },
+            search(keywords){
+                // let newList = [];
+                // this.list.forEach(item=>{
+                //     // 如果keywords为空,会返回0，所以没有数据的时候会显示全部的数据
+                //     if(item.name.indexOf(keywords)!=-1){
+                //         newList.push(item);
+                //     }
+                // });
+
+                // filter返回一个数组
+                return this.list.filter(item=>{
+                    // if(item.name.indexOf(keywords)!=-1)
+
+                    //ES6为字符串提供了一个新方法叫做String.prototype.include('要包含的字符串')
+                    // 如果包含则返回true，否则返回false
+                    if(item.name.includes(keywords)){
+                        return item;
+                    }
+                });
+            }
+        }
+    })
+</script>
+</body>
+</html>
