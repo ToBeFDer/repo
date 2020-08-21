@@ -20,13 +20,14 @@
             </label>
             <label>
                 Name:
-                <input type="text" class="form-control" v-model="name">
+                <input type="text" class="form-control" v-model="name" @keyup.enter="add">
             </label>
-<!--            在vue中，使用事件绑定机制，为元素指定处理函数的时候，加了小括号就可以给函数传递参数了-->
+            <!--            在vue中，使用事件绑定机制，为元素指定处理函数的时候，加了小括号就可以给函数传递参数了-->
             <input type="button" value="添加" class="btn btn-primary" @click="add()" >
             <label>
                 搜索名称关键字:
-                <input type="text" class="form-control" v-model="keywords">
+<!--                在vue中，所有的指令在调用时都以v-开头-->
+                <input type="text" class="form-control" v-model="keywords" id="search" v-focus v-color="'blue'">
             </label>
         </div>
     </div>
@@ -40,12 +41,12 @@
         </tr>
         </thead>
         <tbody>
-<!--        之前v-for中的数据是直接从list中渲染出来的，
-现在自定义了一个search方法，查找符合条件的数据，最后返回一个新数组-->
+        <!--        之前v-for中的数据是直接从list中渲染出来的，
+        现在自定义了一个search方法，查找符合条件的数据，最后返回一个新数组-->
         <tr v-for="item in search(keywords)" :key="item.id">
             <td>{{item.id}}</td>
             <td>{{item.name}}</td>
-<!--            调用了一个过滤器-->
+            <!--            调用了一个过滤器-->
             <td>{{item.ctime | dateFormat}}</td>
             <td>
                 <a href="" @click.prevent="del(item.id)">删除</a>
@@ -54,8 +55,14 @@
         </tbody>
     </table>
 </div>
+
+<div id="app2">
+    <h3>{{dt | dateFormat}}</h3>
+</div>
 <script>
     // 定义了一个全局过滤器
+    // 所谓的全局过滤器，是所有的vm都共享的
+    // 过滤器调用的时候采用的是就近原则，如果私有过滤器和全局过滤器名称相同，采用私有过滤器
     Vue.filter('dateFormat',function (dateStr, pattern="") {
         // 根据给定的时间字符串得到特定的时间
         let dt = new Date(dateStr);
@@ -71,6 +78,48 @@
             let mm = dt.getMinutes();
             let ss = dt.getSeconds();
             return `${y}-${m}-${d} ${hh}:${mm}:${ss}`
+        }
+    });
+
+    // 自定义全局按键修饰符
+    // 这里就将f2注册成了键盘码113
+    Vue.config.keyCodes.f2 = 113;
+
+    // 自定义指令
+    // 使用Vue.directive()定义全局指令
+    // 参数1：指令名称，注意在定义的时候，指令的名称前面，不需要加v-前缀，但是在调用的时候，必须加上v-前缀
+    // 参数2：一个对象，这个对象身上有一些指令相关的函数，这些函数可在特定的阶段执行相关的操作
+    Vue.directive('focus', {
+        // 也就是一旦把指令绑定到input文本框，那么就会立即执行bind，执行focus方法
+        // 但是这里使用的不能成功获取焦点，因为只有元素在内存中，被加入到DOM树中，才有效果
+        // 这里刚进入的时候并没有添加到DOM树中
+       bind:function (el) { //每当指令绑定到元素上时，执行这个函数，而且只执行一次
+           // 注意在每个函数中，第一个参数永远是el，表示被绑定了指令的那个元素，el元素是一个原生的JS对象
+           // 在元素刚绑定指令的时候，还没有插入到DOM中，这时候调用focus方法没有作用
+           // 因为一个元素只有插入DOM中才能获取焦点
+           // 和JS行为有关的操作最好在inserted中去执行，防止JS行为不生效
+           console.log("绑定");
+           el.focus();
+
+       },
+
+        inserted:function (el) { // 元素插入DOM中的时候，会执行insert函数，触发一次
+           // input标签的元素一旦被插入到DOM树中，就会执行这个函数，因此创建的时候必定会加入input到DOM树中
+            // 也就会执行这个函数了
+            console.log("KKKKK");
+           el.focus();
+        },
+        updated:function () { // 当VNode更新的时候会执行updated，可能被触发多次
+
+        }
+    });
+
+    Vue.directive("color",{
+        // 样式只要通过指令绑定给了元素，不管元素有没有被插入到页面中去，这个元素肯定有了一个内联的样式
+        // 将来元素肯定会显示到页面中去，这时候浏览器的渲染引擎必然会解析央视，应用给这个样式
+        bind:function (el, binding) {
+            console.log(binding.value)
+            el.style.color=binding.value;
         }
     });
 
@@ -130,6 +179,34 @@
                         return item;
                     }
                 });
+            }
+        }
+    })
+
+    let vm2 = new Vue({
+        el:"#app2",
+        data:{
+            dt:new Date()
+        },
+        filters:{
+            // 定义私有过滤器，有两个条件--过滤器名称和处理条件
+            dateFormat:function (dateStr, pattern='') {
+                // 根据给定的时间字符串得到特定的时间
+                let dt = new Date(dateStr);
+                let y = dt.getFullYear();
+                let m = (dt.getMonth().toString()).padStart(2,"0");
+                let d = dt.getDate().toString().padStart(2,"0");
+                // 使用tab键上面的`键，可以设置模板字符串,运用占位符
+                // 可能没有给出这个参数，那么就是undefined，这时候先给出一个判断，看能不能转为true
+                if(pattern && pattern.toLowerCase()=== 'yyyy-mm-dd'){
+                    return `${y}-${m}-${d}`;
+                }else{
+                    let hh = dt.getHours().toString().padStart(2,"0");
+                    let mm = dt.getMinutes().toString().padStart(2,"0");
+                    let ss = dt.getSeconds().toString().padStart(2,"0");
+                    // 由于一般时间都是两位，这里应该有一个填充
+                    return `${y}-${m}-${d} ${hh}:${mm}:${ss}----`
+                }
             }
         }
     })
