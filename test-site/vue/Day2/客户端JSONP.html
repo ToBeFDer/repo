@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <title>客户端JSONP</title>
+</head>
+<body>
+<script>
+    // 客户端定义方法的调用，服务器给出数据
+    function showInfo(data) {
+        console.log(data);
+    }
+</script>
+<!-- 以query的形式返回函数名称-->
+<script src="http://127.0.0.1:3000/getscript?callback=showback=showInfo"></script>
+</body>
+</html>
