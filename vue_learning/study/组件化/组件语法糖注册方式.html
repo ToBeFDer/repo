@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <script type="text/javascript" src="../../lib/js/vue.js"></script>
+    <title>Title</title>
+</head>
+<body>
+
+<div id="app">
+    {{msg}}
+</div>
+
+<script>
+    // 全局组件注册的语法糖
+    // 1.创建组件构造器
+    // 普通写法
+    // const cpnC1 = Vue.extend({
+    //     template:`
+    //     <div>我是标题1</div>
+    //     <p>我是正文</p>
+    //     <p>哈哈哈哈</p>`
+    // });
+    // 所谓的语法糖就是将原来的构造对象直接用到注册中，不再使用extend函数，内部会自动使用这个函数
+    Vue.component('cpn1',{
+        template:`
+        <h2>我是标题</h2>
+        <p>我是正文</p>
+        <p>哈哈哈哈</p>`
+    });
+    const app = new Vue({
+        el:"#app",
+        data:{
+            msg:"Hello World~"
+        },
+        methods:{}
+    })
+</script>
+
+</body>
+</html>

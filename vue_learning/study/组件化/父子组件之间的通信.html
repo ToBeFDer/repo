@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <script type="text/javascript" src="../../lib/js/vue.js"></script>
+    <title>Title</title>
+</head>
+<body>
+
+<div id="app">
+<!--    这里调用的是父组件-->
+<!--    cmovies和cmsg就相当于已经是子组件的变量，将父组件的变量数据传递给以props声明的子组件变量之后
+子组件就可以使用这个自己的变量了-->
+    <cpn_fa v-bind:cmovies="movies" :cmsg="msg"></cpn_fa>
+</div>
+
+<template id="cpn">
+<!--    子组件的模板要调用父组件的数据-->
+    <div>
+        {{cmovies}}
+        {{cmsg}}
+    </div>
+</template>
+
+<script>
+// <!--    父传子通过prop传递-->
+    const cpn_son = {
+        // 这里只要是一个满足关键字的对象就行了
+        // 可以使用语法糖法进行注册
+        template:'#cpn',
+        props:['cmovies','cmsg'],
+    };
+    // 这里将Vue实例看作是父组件，创建一个单独的子组件
+    const app = new Vue({
+        el:"#app",
+        data:{
+            // 现在父组件有了这两条数据，要将其传递给子组件
+            // 但是不能直接传递，必须使用子组件的props作为中间媒介
+            msg:"Hello World~",
+            movies:['海贼','火影','柯南']
+        },
+        methods:{},
+        components:{
+            // 使用语法糖的方式进行的组件注册
+            // 因为语法糖的第二个参数就是需要一个对象，这里就像对于给component传递的一个cpn对象
+            // 这个cpn对象在前面进行定义
+            // 这里的vue实例注册了cpn组件，因此这个实例是cpn的父组件
+            // 因为前后的名称都一样，也可以使用增强的写法 直接写cpn
+            // cpn:cpn
+            cpn_fa:cpn_son
+        }
+    })
+</script>
+
+</body>
+</html>

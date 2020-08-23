@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <script type="text/javascript" src="../../lib/js/vue.js"></script>
+    <title>Title</title>
+</head>
+<body>
+
+<div id="app">
+    <cpn></cpn>
+</div>
+
+<script type="text/x-template" id="cpn">
+<div>
+    <h2>{{title}}</h2>
+    <p>我是内容</p>
+    <p>哈哈哈哈</p>
+</div>
+</script>
+<script>
+
+    // 注册一个全局组件
+    Vue.component('cpn', {
+        template:'#cpn',
+        data(){
+            return{
+                title:'这是一个---标题'
+            }
+        }
+    });
+    const app = new Vue({
+        el:"#app",
+        data:{
+            msg:"Hello World~"
+        },
+        methods:{}
+    })
+</script>
+
+</body>
+</html>

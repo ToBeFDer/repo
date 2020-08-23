@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <script type="text/javascript" src="../../lib/js/vue.js"></script>
+    <title>Title</title>
+</head>
+<body>
+
+<div id="app">
+    <cpn2></cpn2>
+</div>
+
+<script>
+
+    // 创建第一个组件构造器
+    const cpnC1= Vue.extend({
+        template:`<div>
+<h2>我是标题</h2>
+<p>我是内容</p>
+<p>哈哈哈哈</p>
+</div>`
+    });
+
+    // 创建第二个组件构造器
+    const cpnC2= Vue.extend({
+        template:`<div>
+<h2>我是标题</h2>
+<p>我是内容</p>
+<p>呵呵呵呵</p>
+<cpn1></cpn1>
+</div>`,
+        // extend字典里面还有一个components方法
+        components:{
+            // 在第二个组件里面注册第一个组件
+            cpn1:cpnC1,
+        }
+    });
+
+    const app = new Vue({
+        el:"#app",
+        data:{
+            msg:"Hello World~"
+        },
+        methods:{},
+        components: {
+            cpn2:cpnC2
+        }
+    })
+</script>
+
+</body>
+</html>

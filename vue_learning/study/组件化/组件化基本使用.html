@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <script type="text/javascript" src="../../lib/js/vue.js"></script>
+    <title>Title</title>
+</head>
+<body>
+
+<div id="app">
+    {{message}}
+    <cpn></cpn>
+</div>
+
+<script>
+    // 创建组件构造器对象
+    const cpnC = Vue.extend({
+       template:`<div>
+                    <h2>我是标题</h2>
+                    <p>我是内容</p>
+                    <p>哈哈哈哈</p>
+                 </div>`
+    });
+    //注册组件，给组件起的名字
+    Vue.component('my-cpn', cpnC);
+
+    const app = new Vue({
+        el:"#app",
+        data:{
+            message:"Hello World~"
+        },
+        methods:{},
+        components:{
+            // components是vue的又一个属性，表示组件，可以注册多个组件
+            // 这里是注册局部组件，键表示使用时候的组件名
+            // 值表示注册的被构造出来的组件
+            // 局部组件只能在其对应的vue实例中使用
+            cpn:cpnC
+        }
+    })
+</script>
+</body>
+</html>
