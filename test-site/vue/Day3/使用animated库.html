@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <script type="text/javascript" src="../../lib/js/vue.js"></script>
+    <link rel="stylesheet" href="../../lib/js/animate.css" type="text/css">
+    <title>Title</title>
+</head>
+<body>
+<div id="root">
+    <transition name="fade"
+                enter-active-class="animated swing"
+                leave-active-class="animated shake">
+        <div v-if="show">hello vue.js</div>
+    </transition>
+    <button @click="handleclick">switch</button>
+</div>
+
+<script type="text/javascript">
+    var vm =new Vue({
+        el:'#root',
+        data:{
+            show:true
+        },
+        methods:{
+            handleclick:function(){
+                this.show=(this.show === true?false:true)/*或者 this.show = !this.show*/
+            }
+        }
+    })
+</script>
+</body>
+
+</html>

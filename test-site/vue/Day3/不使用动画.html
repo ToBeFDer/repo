@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link href="../../lib/js/animate.css">
+    <script type="text/javascript" src="../../lib/js/vue.js"></script>
+    <title>Title</title>
+    <style>
+        /*v-enter 是一个时间点，是进入之前元素的起始状态，此时还没有开始进入
+        v-leave-to 这是动画离开之后，离开的终止状态，此时动画已经结束*/
+        /* 进入之前离开之后透明度都为0 */
+        .v-enter,
+        .v-leave-to{
+            opacity: 0;
+            /*这里80后面的px切不可省略*/
+            transform: translateX(100px);
+        }
+
+        /* v-enter-active [入场动画时间段] */
+        /* v-leave-active [离场动画时间段] */
+        .v-enter-active,
+        .v-leave-active{
+            transition: all 0.4s ease;
+        }
+
+        .my-enter{
+            opacity: 0;
+            transform: translateY(100px);
+        }
+        .my-leave-to{
+            opacity: 0;
+            /*这里80后面的px切不可省略*/
+            transform: translateX(100px);
+        }
+
+        /* v-enter-active [入场动画时间段] */
+        /* v-leave-active [离场动画时间段] */
+        .my-enter-active,
+        .my-leave-active{
+            transition: all 0.4s ease;
+        }
+    </style>
+</head>
+<body>
+<div id="app">
+    <input type="button" value="toggle" @click="flag=!flag">
+<!--    需求:单击按钮，让h3显示，再点击让h3隐藏-->
+<!--    1.使用transition元素，把需要被动画控制得元素包裹起来-->
+<!--    transition元素是Vue官方提供的-->
+    <transition>
+    <h3 v-if="flag">这是一个动画</h3>
+    </transition>
+    <hr>
+    <input type="button" value="toggle2" @click="flag2=!flag2">
+    <transition name="my">
+        <h5 v-if="flag2">柳暗花明</h5>
+    </transition>
+</div>
+
+<script>
+
+    let vm = new Vue({
+        el:"#app",
+        data:{
+            flag:false,
+            flag2:false
+        },
+        methods:{
+            toggle(){
+                console.log("函数已经被调用了~~~");
+                this.flag=!this.flag;
+            }
+        }
+    })
+</script>
+</body>
+</html>
