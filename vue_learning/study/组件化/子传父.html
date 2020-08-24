@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <script type="text/javascript" src="../../lib/js/vue.js"></script>
+    <title>Title</title>
+</head>
+<body>
+
+<div id="app">
+    {{msg}}
+</div>
+
+<script>
+    const cpn={
+        template:"#cpn",
+        props:{
+            cInfo:{
+                type:Object,
+                default(){
+                    return {}
+                }
+            },
+            childMyMessage:{
+                type:String,
+                default:''
+            }
+        }
+    };
+    const app = new Vue({
+        el:"#app",
+        data:{
+            msg:"Hello World~"
+        },
+        methods:{}
+    })
+</script>
+
+</body>
+</html>

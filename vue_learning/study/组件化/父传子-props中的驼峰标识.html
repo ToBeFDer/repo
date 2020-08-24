@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <script type="text/javascript" src="../../lib/js/vue.js"></script>
+    <title>Title</title>
+</head>
+<body>
+
+<div id="app">
+    <cpn :c-info="info" :child-my-message="msg"></cpn>
+</div>
+
+<template id="cpn">
+    <div>
+    <h2>{{cInfo}}</h2>
+    <h2>{{childMyMessage}}</h2>
+    </div>
+</template>
+
+<script>
+    const cpn = {
+        template:"#cpn",
+        props:{
+            cInfo:{
+                // 传过来的应该是一个函数，所以这里默认值被设置成函数返回对象
+                type:Object,
+                default(){
+                    return {}
+                }
+            },
+            childMyMessage:{
+                type: String,
+                default:"my child"
+            }
+        }
+    };
+
+    const app = new Vue({
+        el:"#app",
+        data:{
+            msg:"Hello World~",
+            info:{
+                name:'huang',
+                age: 25,
+                height:1.75
+            }
+        },
+        methods:{},
+        components:{
+            cpn
+        }
+    });
+</script>
+
+</body>
+</html>
