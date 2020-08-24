@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./card.css">
+    <script src="../lib/jquery-3.5.1.js"></script>
+    <title>Title</title>
+</head>
+<body>
+<div class="container">
+    <h1>bilibili</h1>
+    <form action="">
+        <input class="tbx" type="text" placeholder="点赞">
+        <input class="tbx" type="password" placeholder="投币">
+        <input class="sub" type="submit" value="一键三连">
+    </form>
+</div>
+<script>
+    // 定义一个con绑定 .container
+    const con = document.querySelector('.container');
+    // 定义两个开关函数
+    let isIn = true;    // 鼠标进入的门，默认打开
+    let isOut = false;  // 鼠标出去的门，默认关闭
+
+    var span;   //给未出生的元素起个名字
+
+    // 监听鼠标进去的事件+进去的方法
+    con.addEventListener('mouseenter', (e)=>{
+        if(isIn) {
+            // 获取进入鼠标的位置
+            // 生成元素的位置 = 进入点距离窗口的距离 - 父盒子距离窗口的距离
+            let inx = e.clientX - e.target.offsetLeft;
+            let iny = e.clientY - e.target.offsetTop;
+
+            // 创建一个span元素，给出其对应的出生坐标
+            let el = document.createElement("span");
+            el.style.left = inx + "px";
+            el.style.top = iny + "px";
+            con.appendChild(el);
+
+            $(".container span").removeClass('out');// 这一句应该是可以不要，因为这是新创建的一个span，不会有out属性
+            $(".container span").addClass('in');
+            span = document.querySelector(".container span");
+            isIn = false; // 关闭进来的门
+            isOut = true; // 打开出去的门
+        }
+    });
+
+    // 监听鼠标出来的事件+出来的方法
+    con.addEventListener("mouseleave",(e)=>{
+        if(isOut) {
+            // 获取出去的鼠标元素
+            let inx = e.clientX - e.target.offsetLeft;
+            let iny = e.clientY - e.target.offsetTop;
+
+            $(".container span").removeClass('in');
+            $(".container span").addClass("out");
+            $('.out').css("left", inx + 'px'); // 添加出去的坐标
+            $(".out").css("top", iny + "px");
+            span = document.querySelector(".container span");
+
+            isOut = false;  // 关闭出去的大门
+            // 当动画彻底结束之后再删除元素
+            setTimeout(() => {
+                con.removeChild(span);
+                isIn = true;
+            }, 500) // 这里的500设置的和动画的持续时间是一致的
+        }
+    })
+</script>
+</body>
+</html>
