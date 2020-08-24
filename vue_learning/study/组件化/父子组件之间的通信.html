@@ -17,7 +17,9 @@
 <template id="cpn">
 <!--    子组件的模板要调用父组件的数据-->
     <div>
-        {{cmovies}}
+        <ul>
+            <li v-for="item in cmovies">{{item}}</li>
+        </ul>
         {{cmsg}}
     </div>
 </template>
@@ -28,7 +30,15 @@
         // 这里只要是一个满足关键字的对象就行了
         // 可以使用语法糖法进行注册
         template:'#cpn',
-        props:['cmovies','cmsg'],
+        //props:['cmovies','cmsg'],
+        props:{
+            cmovies:Array,
+            cmsg:{
+                type:String,
+                default:"这是一个默认的结果~~",
+                required:true // 表明这个属性是必须传递的值
+            }
+        }
     };
     // 这里将Vue实例看作是父组件，创建一个单独的子组件
     const app = new Vue({
