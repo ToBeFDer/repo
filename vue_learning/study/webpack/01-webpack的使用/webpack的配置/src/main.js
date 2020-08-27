@@ -16,3 +16,19 @@ require('./css/normal.css');
 
 // 依赖less文件
 require('./css/special.less');
+document.writeln('<h2>Hello,Pangping哈哈哈~</h2>');
+
+//default导出的方式不需要使用{}
+//import App from './vue/app'
+import App from "./vue/App.vue";
+
+// 使用vue进行开发
+import Vue from 'vue'
+new Vue({
+    el: "#app",
+    // 下面的template中的代码会被直接放到id为app的div中去。
+    template:`<App />`,
+    components:{
+        App
+    }
+});

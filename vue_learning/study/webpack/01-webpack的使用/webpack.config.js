@@ -1,11 +1,14 @@
 const path = require('path');
+const VueLoaderPlugin = require('vue-loader/lib/plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const uglifyJsPlugin = require('uglifyjs-webpack-plugin');
 
 module.exports = {
     entry:'./src/main.js',
     output:{
         path: path.resolve(__dirname,"dist"),// 动态获取路径
         filename: 'bundle.js',
-        publicPath: 'dist/' // 加上public之后，以后只要是涉及到url的内容都会自动给拼接上publicPath
+        // publicPath: 'dist/' // 加上public之后，以后只要是涉及到url的内容都会自动给拼接上publicPath
     },
     module:{
         rules: [
@@ -48,7 +51,33 @@ module.exports = {
                         presets:['es2015']
                     }
                 }
-            }
+            },
+            {
+                test: /\.vue$/,
+                use: ['vue-loader']
+            },
           ]
+    },
+    resolve: {
+        // alias 别名
+        extensions:['.js','.vue','.css'],
+        alias:{
+            // 给vue起了一个别名，这样在每次导入vue的时候，编译器会先来检查
+            // 看vue是否指向了一个具体的文件夹
+            // 这里就是将vue指向了具体的文件夹，该文件夹下包含了compiler
+            'vue$':'vue/dist/vue.esm.js'
+        }
+    },
+    plugins:[
+        new VueLoaderPlugin(),
+        new HtmlWebpackPlugin({
+            template: 'index.html'
+            }
+        ),
+        new uglifyJsPlugin()
+    ],
+    devServer:{
+        contentBase: "./dist",
+        inline:true,
     }
 };
