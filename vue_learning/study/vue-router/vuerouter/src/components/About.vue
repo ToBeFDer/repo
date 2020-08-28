@@ -7,7 +7,20 @@
 
 <script>
     export default {
-        name: "About"
+        name: "About",
+      beforeCreate() {
+        // console.log("About马上要被创建了");
+      },
+      // created() {
+      //     // 生命周期函数
+      //   // console.log("About被创建了");
+      // }
+      created() {
+        console.log("关于created");
+      },
+      destroyed() {
+        console.log("关于destroyed");
+      },
     }
 </script>
 
